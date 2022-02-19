@@ -27,7 +27,7 @@ public class Controlador {
 		this.vista.setControlador(this);
 	}
 
-	public void comenzar() {
+	public void comenzar()throws OperationNotSupportedException {
 		vista.comenzar();
 	}
 
