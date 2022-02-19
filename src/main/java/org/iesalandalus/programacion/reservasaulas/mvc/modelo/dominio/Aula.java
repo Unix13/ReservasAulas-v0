@@ -44,15 +44,12 @@ public class Aula {
 
 	@Override
 	public boolean equals(Object obj) {
-
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-
-		if (!(obj instanceof Aula)) {
+		if (obj == null)
 			return false;
-		}
-
+		if (getClass() != obj.getClass())
+			return false;
 		Aula other = (Aula) obj;
 		return Objects.equals(nombre, other.nombre);
 	}

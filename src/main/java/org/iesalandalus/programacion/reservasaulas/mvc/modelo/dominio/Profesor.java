@@ -83,14 +83,15 @@ public class Profesor {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Profesor))
+		if (getClass() != obj.getClass())
 			return false;
-		Profesor profesor = (Profesor) obj;
-		if (this.getNombre().equals(profesor.getNombre()))
-			return true;
-		return false;
+		Profesor other = (Profesor) obj;
+		return Objects.equals(correo, other.correo) && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(telefono, other.telefono);
 	}
 
 	@Override

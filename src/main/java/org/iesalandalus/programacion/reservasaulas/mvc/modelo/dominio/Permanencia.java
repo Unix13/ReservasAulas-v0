@@ -9,7 +9,7 @@ public class Permanencia {
 	private LocalDate dia;
 	private Tramo tramo;
 
-	protected static final DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public Permanencia(LocalDate dia, Tramo tramo) {
 		setDia(dia);
@@ -53,12 +53,12 @@ public class Permanencia {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Permanencia)) {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		Permanencia other = (Permanencia) obj;
 		return Objects.equals(dia, other.dia) && tramo == other.tramo;
 	}
