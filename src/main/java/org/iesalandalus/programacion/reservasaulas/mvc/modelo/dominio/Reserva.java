@@ -74,7 +74,7 @@ public class Reserva {
 //	Método toString
 	@Override
 	public String toString() {
-		return "Profesor=" + profesor.toString() + ", aula=" + aula.toString() + ", permanencia=" + permanencia.toString();
+		return "Profesor :" + profesor.toString() + ", aula :" + aula.toString() + ", permanencia :" + permanencia.toString();
 	}
 
 }
