@@ -9,11 +9,10 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Permanenci
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Reserva;
 import org.iesalandalus.programacion.reservasaulas.mvc.vista.Vista;
 
-
 public class Controlador {
 
-	private Vista vista;
-	private Modelo modelo;
+	 Vista vista;
+	 Modelo modelo;
 
 	public Controlador(Modelo modelo, Vista vista) {
 		if (modelo == null) {
@@ -27,14 +26,14 @@ public class Controlador {
 		this.vista.setControlador(this);
 	}
 
-	public void comenzar()throws OperationNotSupportedException {
+	public void comenzar() throws OperationNotSupportedException {
 		vista.comenzar();
 	}
 
 	public void terminar() {
 		System.out.println("Adiós");
 	}
-	
+
 	public void insertar(Profesor profesor) throws OperationNotSupportedException {
 		modelo.insertarProfesor(profesor);
 	}
@@ -42,7 +41,6 @@ public class Controlador {
 	public void insertar(Aula aula) throws OperationNotSupportedException {
 		modelo.insertarAula(aula);
 	}
-		
 
 	public Profesor buscar(Profesor profesor) {
 		return modelo.buscarProfesor(profesor);
@@ -52,8 +50,6 @@ public class Controlador {
 		return modelo.buscarAula(aula);
 	}
 
-	
-
 	public void borrar(Profesor profesor) throws OperationNotSupportedException {
 		modelo.borrarProfesor(profesor);
 	}
@@ -62,56 +58,62 @@ public class Controlador {
 		modelo.borrarAula(aula);
 	}
 
-public String[] representarAulas() {
-		
+	public String[] representarAulas() {
+
+		String[] listaAulas = modelo.representarAulas();
 		return modelo.representarAulas();
 
 	}
-	
+
 	public String[] representarProfesores() {
-		
+
+		String[] listaProfesores = modelo.representarProfesores();
 		return modelo.representarProfesores();
-		
+
 	}
-	
+
 	public String[] representarReservas() {
-		
+
+		String[] listaReservas = modelo.respresentarReservas();
 		return modelo.respresentarReservas();
-		
+
 	}
-	
+
 	public void realizarReserva(Reserva reserva) throws OperationNotSupportedException {
-		
+
 		modelo.realizarReserva(reserva);
-		
+
 	}
-	
+
 	public void anularReserva(Reserva reserva) throws OperationNotSupportedException {
-		
+
 		modelo.anularReserva(reserva);
-		
+
 	}
-	
+
 	public Reserva[] getReservasAula(Aula aula) {
-		
+
+		Reserva[] reservasAula = modelo.getReservasAula(aula);
 		return modelo.getReservasAula(aula);
-		
+
 	}
-	
+
 	public Reserva[] getReservasProfesor(Profesor profesor) {
-		
+
+		Reserva[] reservasProfesor = modelo.getReservasProfesor(profesor);
 		return modelo.getReservasProfesor(profesor);
 	}
-	
+
 	public Reserva[] getReservasPermanencia(Permanencia permanencia) {
 		
+		Reserva[] reservasPermanencia = modelo.getReservasPermanencia(permanencia);
 		return modelo.getReservasPermanencia(permanencia);
 	}
-	
+
 	public boolean consultarDisponibilidad(Aula aula, Permanencia permanencia) {
 		
-		return modelo.consulrarDisponibilidad(aula, permanencia);
-		
+		boolean disponibilidad=modelo.consultarDisponibilidad(aula, permanencia);
+		return modelo.consultarDisponibilidad(aula, permanencia);
+
 	}
 }
-

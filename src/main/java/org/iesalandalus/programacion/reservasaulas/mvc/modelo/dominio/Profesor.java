@@ -58,7 +58,7 @@ public class Profesor {
 		if (correo == null) {
 			throw new NullPointerException("ERROR: El correo del profesor no puede ser nulo.");
 		}
-		if (!correo.matches(ER_CORREO)) {
+		if (correo.isBlank() || !correo.matches(ER_CORREO)) {
 			throw new IllegalArgumentException("ERROR: El correo del profesor no es válido.");
 		}
 		this.correo = correo;

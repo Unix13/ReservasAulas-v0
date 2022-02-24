@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.reservasaulas.mvc.vista;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
@@ -11,6 +12,8 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 public class Consola {
 
 	private final static DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/M/yyyy");
+	static Opcion[] opciones = Opcion.values();
+	static Tramo[] tramos = Tramo.values();
 
 	public Consola() {
 
@@ -83,9 +86,25 @@ public class Consola {
 
 	public static LocalDate leerDia() {
 
-		System.out.println("Por favor, intrdozuca una fecha: ");
-		return LocalDate.parse(Entrada.cadena(), FORMATO_DIA);
+		LocalDate fechaFinal = null;
+		boolean problema = false;
+		do {
+			try {
+				System.out.println("Introduzca una fecha(formato dd/mm/aaaa):");
+				String fechaIntroducida = Entrada.cadena();
+				fechaFinal = LocalDate.parse(fechaIntroducida, FORMATO_DIA);
+				problema = false;
 
+			} catch (DateTimeParseException e) {
+				System.out.println("ERROR: Formato no válido");
+				problema = true;
+			}
+			if (fechaFinal.isBefore(LocalDate.now())) {
+				System.out.println("ERROR: La fecha introducida no puede ser anterior al día actual");
+				problema = true;
+			}
+		} while (problema == true);
+		return fechaFinal;
 	}
 
 	public static Tramo leerTramo() {
@@ -101,4 +120,4 @@ public class Consola {
 		return tramo;
 	}
 
- }
+}

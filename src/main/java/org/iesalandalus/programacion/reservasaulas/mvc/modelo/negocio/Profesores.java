@@ -7,17 +7,8 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
 public class Profesores {
 
 	private int capacidad;
-	private Profesor[] coleccionProfesores;
 	private int tamano;
-
-	public Profesores(int capacidad) {
-		if (capacidad <= 0) {
-			throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-		}
-		this.capacidad = capacidad;
-		coleccionProfesores = new Profesor[capacidad];
-		tamano = 0;
-	}
+	Profesor[] coleccionProfesores;
 
 	public Profesor[] get() {
 		return copiaProfundaProfesores();
@@ -25,112 +16,126 @@ public class Profesores {
 
 	private Profesor[] copiaProfundaProfesores() {
 
-		Profesor[] copiaProfesores = new Profesor[capacidad];
-		for (int i = 0; !tamanoSuperado(i); i++) {
-			copiaProfesores[i] = new Profesor(coleccionProfesores[i]);
+		int indice = 0;
+		Profesor[] copiaProfunda = new Profesor[tamano];
+		for (int i = indice; i <= tamano - 1; ++i) {
+			copiaProfunda[indice] = new Profesor(coleccionProfesores[i]);
+			indice++;
 		}
-
-		return copiaProfesores;
-	}
-
-	public int getTamano() {
-
-		return tamano;
+		return copiaProfunda;
 	}
 
 	public int getCapacidad() {
-
 		return capacidad;
 	}
 
-	public void insertar(Profesor Profesor) throws OperationNotSupportedException {
+	public int getTamano() {
+		return tamano;
+	}
 
-		if (Profesor == null) {
+	public Profesores(int capacidad) {
+		if (capacidad <= 0) {
+			throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
+		}
+		coleccionProfesores = new Profesor[capacidad];
+		this.capacidad = capacidad;
+		this.tamano = 0;
+	}
+
+	private int buscarIndice(Profesor profesor) {
+		boolean profesorEncontrado = false;
+		int resultado = 0;
+		for (int i = 0; i <= tamano - 1; i++) {
+			if (profesor.equals(coleccionProfesores[i])) {
+				profesorEncontrado = true;
+				resultado = i;
+			}
+		}
+		if (profesorEncontrado) {
+			return resultado;
+		} else {
+			return tamano + 1;
+		}
+	}
+
+	private boolean tamanoSuperado(int indice) {
+		
+		if (indice > tamano) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean capacidadSuperada(int tamano) {
+		
+		if (tamano >= capacidad) {
+			return true;
+		}
+		return false;
+	}
+
+	public void insertar(Profesor profesor) throws OperationNotSupportedException {
+
+		if (profesor == null) {
 			throw new NullPointerException("ERROR: No se puede insertar un profesor nulo.");
 		}
-		int indice = buscarIndice(Profesor);
-
-		if (capacidadSuperada(indice)) {
+		int espacioPosible = buscarIndice(profesor);
+		if (capacidadSuperada(tamano)) {
 			throw new OperationNotSupportedException("ERROR: No se aceptan más profesores.");
-		}
-
-		if (tamanoSuperado(indice)) {
-			coleccionProfesores[indice] = new Profesor(Profesor);
+		} else if (tamanoSuperado(espacioPosible)) {
+			coleccionProfesores[tamano] = new Profesor(profesor);
 			tamano++;
 		} else {
 			throw new OperationNotSupportedException("ERROR: Ya existe un profesor con ese nombre.");
 		}
-
 	}
 
-	private int buscarIndice(Profesor buscarProfesor) {
-
-		int indice = 0;
-		boolean profesorEncontrado = false;
-		while (!tamanoSuperado(indice) && !profesorEncontrado) {
-			if (coleccionProfesores[indice].equals(buscarProfesor)) {
-				profesorEncontrado = true;
-			} else {
-
-				indice++;
-			}
-		}
-		return indice;
-	}
-
-	private boolean tamanoSuperado(int indice) {
-
-		return (indice >= tamano);
-	}
-
-	private boolean capacidadSuperada(int indice) {
-
-		return (indice >= capacidad);
-	}
-
-	public Profesor buscar(Profesor Profesor) {
-
-		if (Profesor == null) {
+	public Profesor buscar(Profesor profesor) {
+		
+		if (profesor == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un profesor nulo.");
 		}
-		int indice = buscarIndice(Profesor);
+		int indice = buscarIndice(profesor);
 		if (tamanoSuperado(indice)) {
 			return null;
 		} else {
-
-			return new Profesor(Profesor);
+			return new Profesor(coleccionProfesores[indice]);
 		}
 	}
 
-	public void borrar(Profesor Profesor) throws OperationNotSupportedException {
-
-		if (Profesor == null) {
-			throw new NullPointerException("ERROR: No se puede borrar un profesor nulo.");
-		}
-
-		int indice = buscarIndice(Profesor);
-		if (!tamanoSuperado(indice)) {
-			desplazarUnaPosicionHaciaIzquierda(indice);
-		} else {
-
-			throw new OperationNotSupportedException("ERROR: No existe ningún profesor con ese nombre.");
-		}
-
-	}
 
 	private void desplazarUnaPosicionHaciaIzquierda(int indice) {
-		for (int i = indice; !tamanoSuperado(i); i++) {
-			coleccionProfesores[i] = coleccionProfesores[i + 1];
+		for (int i = indice; i < tamano - 1; ++i) {
+			coleccionProfesores[i] = new Profesor(coleccionProfesores[i + 1]);
 		}
-		tamano--;
 	}
+
+
+	public void borrar(Profesor profesor) throws OperationNotSupportedException {
+		
+		int indice = 0;
+		if (profesor == null) {
+			throw new NullPointerException("ERROR: No se puede borrar un profesor nulo.");
+		}
+		
+		indice = buscarIndice(profesor);
+		if (!tamanoSuperado(indice)) {
+			desplazarUnaPosicionHaciaIzquierda(indice);
+			coleccionProfesores[tamano - 1] = null;
+			tamano--;
+		} else {
+			throw new OperationNotSupportedException("ERROR: No existe ningún profesor con ese nombre.");
+		}
+	}
+
 
 	public String[] representar() {
 		String[] representacion = new String[tamano];
-		for (int i = 0; i < tamano; i++) {
-			representacion[i] = coleccionProfesores[i].toString();
+		int indice = 0;
+		for (int i = indice; i <= tamano - 1; ++i) {
+			representacion[indice] = coleccionProfesores[i].toString();
+			indice++;
 		}
 		return representacion;
 	}
-
 }
