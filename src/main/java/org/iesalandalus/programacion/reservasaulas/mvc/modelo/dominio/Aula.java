@@ -7,15 +7,15 @@ public class Aula {
 	private String nombre;
 
 	public Aula(String nombre) {
+
 		setNombre(nombre);
 	}
 
 	public Aula(Aula aula) {
-
 		if (aula == null) {
 			throw new NullPointerException("ERROR: No se puede copiar un aula nula.");
-
 		}
+
 		setNombre(aula.getNombre());
 	}
 
@@ -23,22 +23,20 @@ public class Aula {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
-
+	private void setNombre(String nombre) {
 		if (nombre == null) {
 			throw new NullPointerException("ERROR: El nombre del aula no puede ser nulo.");
 		}
 
-		if (nombre.trim().equals("")) {
+		if (nombre.trim().isEmpty()) {
 			throw new IllegalArgumentException("ERROR: El nombre del aula no puede estar vacío.");
-		}
 
+		}
 		this.nombre = nombre;
 	}
 
 	@Override
 	public int hashCode() {
-
 		return Objects.hash(nombre);
 	}
 
@@ -56,8 +54,7 @@ public class Aula {
 
 	@Override
 	public String toString() {
-
-		return String.format("nombre Aula=%s", nombre);
+		return "nombre Aula=" + getNombre();
 	}
 
 }

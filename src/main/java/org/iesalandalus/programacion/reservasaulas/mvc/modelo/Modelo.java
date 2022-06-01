@@ -11,12 +11,11 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Profesores
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio.Reservas;
 
 public class Modelo {
-
 	private static final int CAPACIDAD = 10;
 
-	Profesores profesores;
-	Aulas aulas;
-	Reservas reservas;
+	private Profesores profesores;
+	private Aulas aulas;
+	private Reservas reservas;
 
 	public Modelo() {
 		profesores = new Profesores(CAPACIDAD);
@@ -25,173 +24,119 @@ public class Modelo {
 	}
 
 	public Aula[] getAulas() {
+
 		return aulas.get();
 	}
 
 	public int getNumAulas() {
+
 		return aulas.getTamano();
+
 	}
 
 	public String[] representarAulas() {
 
-		String[] listaAulas = aulas.representar();
-		boolean vacio = true;
-		for (String s : listaAulas) {
-			if (s != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return listaAulas;
+		return aulas.representar();
 	}
 
-	public Aula buscarAula(Aula aula) {
+	public Aula buscar(Aula aula) {
 
-		Aula aulaEncontrada = aulas.buscar(aula);
-		if (aulaEncontrada == null) {
-			return null;
-		} else {
-			return new Aula(aulaEncontrada);
-		}
+		return aulas.buscar(aula);
 	}
 
-	public void insertarAula(Aula aula) throws OperationNotSupportedException {
+	public void insertar(Aula aula) throws OperationNotSupportedException {
+
 		aulas.insertar(aula);
 	}
 
-	public void borrarAula(Aula aula) throws OperationNotSupportedException {
+	public void borrar(Aula aula) throws OperationNotSupportedException {
+
 		aulas.borrar(aula);
 	}
 
 	public Profesor[] getProfesores() {
+
 		return profesores.get();
 	}
 
 	public int getNumProfesores() {
+
 		return profesores.getTamano();
+
 	}
 
 	public String[] representarProfesores() {
 
-		String[] listaProfesores = profesores.representar();
-		boolean vacio = true;
-		for (String s : listaProfesores) {
-			if (s != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return listaProfesores;
+		return profesores.representar();
 	}
 
-	public Profesor buscarProfesor(Profesor profesor) {
+	public Profesor buscar(Profesor profesor) {
 
-		Profesor profesorEncontrado = profesores.buscar(profesor);
-		if (profesorEncontrado == null) {
-			return null;
-		}
-		return new Profesor(profesorEncontrado);
+		return profesores.buscar(profesor);
 	}
 
-	public void insertarProfesor(Profesor profesor) throws OperationNotSupportedException {
+	public void insertar(Profesor profesor) throws OperationNotSupportedException {
 
 		profesores.insertar(profesor);
 	}
 
-	public void borrarProfesor(Profesor profesor) throws OperationNotSupportedException {
+	public void borrar(Profesor profesor) throws OperationNotSupportedException {
+
 		profesores.borrar(profesor);
 	}
 
 	public Reserva[] getReservas() {
+
 		return reservas.get();
 	}
 
 	public int getNumReservas() {
+
 		return reservas.getTamano();
+
 	}
 
-	public String[] respresentarReservas() {
+	public String[] representarReservas() {
 
-		String[] listaReservas = reservas.representar();
-		boolean vacio = true;
-		for (String s : listaReservas) {
-			if (s != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return listaReservas;
+		return reservas.representar();
 	}
 
-	public Reserva buscarReserva(Reserva reserva) {
+	public Reserva buscar(Reserva reserva) {
 
-		Reserva reservaEncontrada = reservas.buscar(reserva);
-		if (reservaEncontrada == null) {
-			return null;
-		}
-		return new Reserva(reservaEncontrada);
+		return reservas.buscar(reserva);
 	}
 
 	public void realizarReserva(Reserva reserva) throws OperationNotSupportedException {
+
 		reservas.insertar(reserva);
+
 	}
 
 	public void anularReserva(Reserva reserva) throws OperationNotSupportedException {
+
 		reservas.borrar(reserva);
 	}
 
-	public Reserva[] getReservasAula(Aula aula) {
+	public Reserva[] getReservasAulas(Aula aula) {
 
-		Reserva[] reservasAula = reservas.getReservasAula(aula);
-		boolean vacio = true;
-		for (Reserva r : reservasAula) {
-			if (r != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return reservasAula;
+		return reservas.getReservasAula(aula);
 	}
 
 	public Reserva[] getReservasProfesor(Profesor profesor) {
 
-		Reserva[] reservasProfesor = reservas.getReservasProfesor(profesor);
-		boolean vacio = true;
-		for (Reserva r : reservasProfesor) {
-			if (r != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return reservasProfesor;
+		return reservas.getReservasProfesor(profesor);
+
 	}
 
 	public Reserva[] getReservasPermanencia(Permanencia permanencia) {
 
-		Reserva[] reservasPermanencia = reservas.getReservasPermanencia(permanencia);
-		boolean vacio = true;
-		for (Reserva r : reservasPermanencia) {
-			if (r != null) {
-				vacio = false;
-			}
-		}
-		if (vacio == true) {
-			return null;
-		}
-		return reservasPermanencia;
+		return reservas.getReservasPermanencia(permanencia);
+
 	}
 
 	public boolean consultarDisponibilidad(Aula aula, Permanencia permanencia) {
+
 		return reservas.consultarDisponibilidad(aula, permanencia);
 	}
+
 }
